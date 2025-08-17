@@ -61,3 +61,33 @@ Cypress.Commands.add("editarDadosTabela", () => {
     department: department,
   })
 })
+
+Cypress.Commands.add("preencheAlgunsCamposForm", () => {
+  cy.get(INPUT_FIRST_NAME)
+    .should("be.visible")
+    .clear()
+    .type(firstName, { delay: 100 })
+
+  cy.get(INPUT_LAST_NAME)
+    .should("be.visible")
+    .clear()
+    .type(lastName, { delay: 100 })
+})
+
+Cypress.Commands.add("verificaCamposVazioFormulario", () => {
+  cy.get(INPUT_EMAIL)
+    .should("be.visible", "have.attr", "required")
+    .and("have.css", "border-color", "rgb(220, 53, 69)")
+
+  cy.get(INPUT_AGE)
+    .should("be.visible", "have.attr", "required")
+    .and("have.css", "border-color", "rgb(220, 53, 69)")
+
+  cy.get(INPUT_SALARY)
+    .should("be.visible", "have.attr", "required")
+    .and("have.css", "border-color", "rgb(220, 53, 69)")
+
+  cy.get(INPUT_DEPARTMENT)
+    .should("be.visible", "have.attr", "required")
+    .and("have.css", "border-color", "rgb(220, 53, 69)")
+})
