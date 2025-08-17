@@ -15,38 +15,24 @@ const department = faker.person.jobArea()
 
 Cypress.Commands.add("preencheCamposFormulario", () => {
   cy.writeFile("cypress/fixtures/dadosTabela.json", {
-    firstName: firstName,
-    lastName: lastName,
-    age: age,
-    department: department,
+    firstName,
+    lastName,
+    age,
+    department,
   })
 
-  cy.get(INPUT_FIRST_NAME)
-    .should("be.visible")
-    .clear()
-    .type(firstName, { delay: 100 })
+  const campos = [
+    { selector: INPUT_FIRST_NAME, valor: firstName },
+    { selector: INPUT_LAST_NAME, valor: lastName },
+    { selector: INPUT_EMAIL, valor: Cypress.env("email") },
+    { selector: INPUT_AGE, valor: age },
+    { selector: INPUT_SALARY, valor: Cypress.env("salary") },
+    { selector: INPUT_DEPARTMENT, valor: department },
+  ]
 
-  cy.get(INPUT_LAST_NAME)
-    .should("be.visible")
-    .clear()
-    .type(lastName, { delay: 100 })
-
-  cy.get(INPUT_EMAIL)
-    .should("be.visible")
-    .clear()
-    .type(Cypress.env("email"), { delay: 100 })
-
-  cy.get(INPUT_AGE).should("be.visible").clear().type(age, { delay: 100 })
-
-  cy.get(INPUT_SALARY)
-    .should("be.visible")
-    .clear()
-    .type(Cypress.env("salary"), { delay: 100 })
-
-  cy.get(INPUT_DEPARTMENT)
-    .should("be.visible")
-    .clear()
-    .type(department, { delay: 100 })
+  campos.forEach(({ selector, valor }) => {
+    cy.get(selector).should("be.visible").clear().type(valor, { delay: 100 })
+  })
 })
 
 Cypress.Commands.add("clicaBotaoSubmit", () => {
@@ -75,19 +61,15 @@ Cypress.Commands.add("preencheAlgunsCamposForm", () => {
 })
 
 Cypress.Commands.add("verificaCamposVazioFormulario", () => {
-  cy.get(INPUT_EMAIL)
-    .should("be.visible", "have.attr", "required")
-    .and("have.css", "border-color", "rgb(220, 53, 69)")
-
-  cy.get(INPUT_AGE)
-    .should("be.visible", "have.attr", "required")
-    .and("have.css", "border-color", "rgb(220, 53, 69)")
-
-  cy.get(INPUT_SALARY)
-    .should("be.visible", "have.attr", "required")
-    .and("have.css", "border-color", "rgb(220, 53, 69)")
-
-  cy.get(INPUT_DEPARTMENT)
-    .should("be.visible", "have.attr", "required")
-    .and("have.css", "border-color", "rgb(220, 53, 69)")
+  const camposObrigatorios = [
+    INPUT_EMAIL,
+    INPUT_AGE,
+    INPUT_SALARY,
+    INPUT_DEPARTMENT,
+  ]
+  camposObrigatorios.forEach((campo) => {
+    cy.get(campo)
+      .should("be.visible", "have.attr", "required")
+      .and("have.css", "border-color", "rgb(220, 53, 69)")
+  })
 })
