@@ -1,7 +1,7 @@
 import { And, Then } from "cypress-cucumber-preprocessor/steps"
 
 And("clico no botão Edit de Action", () => {
-  cy.botaoEditar()
+  cy.botaoEditar(3)
 })
 
 And("edito as informações desejadas", () => {
@@ -9,5 +9,5 @@ And("edito as informações desejadas", () => {
 })
 
 Then("os dados devem ser atualizados corretamente na tabela", () => {
-  cy.validaEdicaoTabela()
+  cy.validaEdicaoTabela(3)
 })
