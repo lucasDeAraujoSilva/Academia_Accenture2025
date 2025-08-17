@@ -50,7 +50,7 @@ Cypress.Commands.add("preencheCamposFormulario", () => {
 })
 
 Cypress.Commands.add("clicaBotaoSubmit", () => {
-  cy.get(BTN_SUBMIT).should('be.visible').click()
+  cy.get(BTN_SUBMIT).should("be.visible").click()
 })
 
 Cypress.Commands.add("editarDadosTabela", () => {
