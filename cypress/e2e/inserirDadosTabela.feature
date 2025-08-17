@@ -3,7 +3,7 @@
 
 Funcionalidade: InserirDadosTabela-01 - Inserir dados na tabela
 
-    Cenário: 
+    Cenário:
         Dado que acesso o portal demoqa webtables
         E clico no botão Add
         E preencho os campos obrigatórios com dados válidos
