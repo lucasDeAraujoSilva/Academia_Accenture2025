@@ -2,6 +2,7 @@ const BTN_ADD = "#addNewRecordButton"
 const TABLE = ".ReactTable"
 const BTN_EDIT = "#edit-record"
 const BTN_DELETE = "#delete-record"
+const INPUT_SEARCH = "#searchBox"
 
 Cypress.Commands.add("clicaBotaoAdd", () => {
   cy.get(BTN_ADD).should("be.visible").click()
@@ -37,7 +38,7 @@ Cypress.Commands.add("botaoDeletar", () => {
   cy.get(`${BTN_DELETE}-${linha}`).should("be.visible").click()
 })
 
-Cypress.Commands.add("botaoDeletar1", () => {
+Cypress.Commands.add("botaoDeletarNaoExiste", () => {
   const linha = Cypress.env("deletaLinha")
   cy.get(`${BTN_DELETE}-${linha}`).should("not.exist")
 })
@@ -49,4 +50,14 @@ Cypress.Commands.add("validaEdicaoTabela", (linha) => {
       .should("be.visible")
       .contains(userData.age)
   })
+})
+
+Cypress.Commands.add("preencheCampoSearch", (dado) => {
+  cy.get(INPUT_SEARCH).should("be.visible").clear().type(dado, { delay: 100 })
+})
+
+Cypress.Commands.add("validaPesquisa", (dado, coluna) => {
+  cy.get(`.rt-tbody > :nth-child(1) > .rt-tr > :nth-child(${coluna})`)
+    .should("be.visible")
+    .contains(dado)
 })
